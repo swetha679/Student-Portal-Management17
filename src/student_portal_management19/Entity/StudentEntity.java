@@ -2,10 +2,10 @@ package src.student_portal_management19.Entity;
 
 import jakarta.persistence.*;
 
-@Entity// table => create
+@Entity
 @Table(name = "Student_register")
 public class StudentEntity {
-    @Id//=>unquie
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long reg;
