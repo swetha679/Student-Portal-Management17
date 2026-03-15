@@ -1,36 +1,23 @@
-package studentpackage.student_portal_management19.Entity;
+package src.student_portal_management19.DTO;
 
-import jakarta.persistence.*;
+public class StudentDto {
 
-@Entity// table => create
-@Table(name = "Student_register")//create table name
-public class StudentEntity {
-    @Id//=>unquie
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private Long reg;
     private String name;
     private String password;
     private int year;
     private String clg;
-//=> obj method one default object
-    public StudentEntity(){
+public StudentDto(){
 
-    }
-    public StudentEntity(Long reg, String name, String password, int year, String clg) {
+}
+
+    public StudentDto(Long reg, String name, String password, int year, String clg) {
         this.reg = reg;
         this.name = name;
         this.password = password;
         this.year = year;
         this.clg = clg;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getReg() {

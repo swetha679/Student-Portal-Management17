@@ -1,4 +1,4 @@
-package studentpackage.student_portal_management19.Repostiory;
+package src.student_portal_management19.Repostiory;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

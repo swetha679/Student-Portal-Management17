@@ -1,4 +1,4 @@
-package studentpackage.student_portal_management19;
+package src.student_portal_management19;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

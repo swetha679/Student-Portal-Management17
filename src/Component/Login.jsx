@@ -1,51 +1,184 @@
-import { Link, useNavigate } from 'react-router-dom';
-import img from './img/student.jpg'
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-function Login(){
-    const[reg,setreg]=useState("");//=>
-        const[password,setpassword]=useState("");
-    useEffect(
-      ()=>  {
-            
-sessionStorage.clear();//=>12345remove == display
-        },[]
-    )
-const navigate=useNavigate();
-    const loginhanding=async()=>{
-        const login={reg,password}
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/authService';
+
+const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError]       = useState('');
+    const [loading, setLoading]   = useState(false);
+    const navigate = useNavigate();
+
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
         try {
-            const response= await axios.post("http://localhost:8080/Login",login);
-            console.log(response.data);
-            if(response.data==="Login successfull"){
-                alert("login successful");
-                navigate("/home")
-                sessionStorage.setItem('reg',reg);//=>login(reg=> set)
-            }else{
-                alert("login failed");
-                navigate("/Register")
-            }
-        } catch (error) {
-            alert("backend is not connected");
+            await login(username, password);
+            navigate('/dashboard'); 
+        } catch (err) {
+            setError(
+                err.response?.data?.message ||
+                'Invalid username or password. Please try again.'
+            );
+        } finally {
+            setLoading(false);
         }
-    }
-    return(
-       <div className="row">
-        <div className="col-6">
-<img src={img} alt='' width="600px" height="600px" />
+    };
+
+
+    return (
+        <div style={styles.page}>
+            <div style={styles.card}>
+
+                {/* Header */}
+                <div style={styles.header}>
+                    <div style={styles.logo}>🎓</div>
+                    <h1 style={styles.title}>Student Portal</h1>
+                    <p style={styles.subtitle}>Sign in to your account</p>
+                </div>
+
+               
+                {error && (
+                    <div style={styles.errorBox}>
+                        ⚠️ {error}
+                    </div>
+                )}
+
+              
+                <form onSubmit={handleLogin} style={styles.form}>
+
+                    <div style={styles.field}>
+                        <label style={styles.label}>Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Enter your username"
+                            style={styles.input}
+                            required
+                        />
+                    </div>
+
+                    <div style={styles.field}>
+                        <label style={styles.label}>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter your password"
+                            style={styles.input}
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        style={loading ? styles.buttonDisabled : styles.button}
+                        disabled={loading}
+                    >
+                        {loading ? 'Signing in...' : 'Sign In'}
+                    </button>
+
+                </form>
+            </div>
         </div>
-        <div className="col-6">
-<div className='form-group shadow border border-primary p-3 rounded' style={{width:"350px",marginTop:"120px"}}>
-    <p className='h4 text-center'>Student Login</p>
-    <label className='form-label mt-2'>Name</label>
-    <input value={reg} onChange={(e)=>setreg(e.target.value)} className='form-control mt-2' type='number' placeholder='Enter your Reg no'/>
-    <label className='form-label mt-2'>Password</label>
-    <input value={password} onChange={(e)=>setpassword(e.target.value)} className='form-control mt-2' type='password' placeholder='Enter your password'/>
-    <button className='btn btn-primary w-100 mt-3' onClick={loginhanding}>Login</button>
-    <p className='mt-3 ms-5'>Do not have an account?<Link to="/Register" className='btn btn-outline-success ms-2'>Register</Link></p>
-</div>
-        </div>
-       </div>
-    )
-}
+    );
+};
+
+
+const styles = {
+    page: {
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%)',
+        fontFamily: "'Segoe UI', sans-serif",
+    },
+    card: {
+        background: '#fff',
+        borderRadius: '16px',
+        padding: '40px',
+        width: '100%',
+        maxWidth: '420px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+    },
+    header: {
+        textAlign: 'center',
+        marginBottom: '32px',
+    },
+    logo: {
+        fontSize: '48px',
+        marginBottom: '12px',
+    },
+    title: {
+        fontSize: '26px',
+        fontWeight: '700',
+        color: '#1e3a5f',
+        margin: '0 0 6px',
+    },
+    subtitle: {
+        fontSize: '14px',
+        color: '#888',
+        margin: 0,
+    },
+    errorBox: {
+        background: '#fff0f0',
+        border: '1px solid #ffcccc',
+        color: '#cc0000',
+        borderRadius: '8px',
+        padding: '12px 16px',
+        marginBottom: '20px',
+        fontSize: '14px',
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
+    },
+    field: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '6px',
+    },
+    label: {
+        fontSize: '14px',
+        fontWeight: '600',
+        color: '#333',
+    },
+    input: {
+        padding: '12px 16px',
+        borderRadius: '8px',
+        border: '1.5px solid #ddd',
+        fontSize: '15px',
+        outline: 'none',
+        transition: 'border-color 0.2s',
+    },
+    button: {
+        padding: '14px',
+        background: 'linear-gradient(135deg, #1e3a5f, #2d6a9f)',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '8px',
+        fontSize: '16px',
+        fontWeight: '600',
+        cursor: 'pointer',
+        marginTop: '8px',
+    },
+    buttonDisabled: {
+        padding: '14px',
+        background: '#aaa',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '8px',
+        fontSize: '16px',
+        fontWeight: '600',
+        cursor: 'not-allowed',
+        marginTop: '8px',
+    },
+};
+
 export default Login;

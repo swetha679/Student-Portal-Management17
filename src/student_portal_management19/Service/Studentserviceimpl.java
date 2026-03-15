@@ -1,4 +1,4 @@
-package studentpackage.student_portal_management19.Service;
+package src.student_portal_management19.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

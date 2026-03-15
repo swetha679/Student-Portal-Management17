@@ -1,25 +1,15 @@
-package studentpackage.student_portal_management19.Entity;
+package src.student_portal_management19.DTO;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "Student-mark")
-public class MarkEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MarkDto {
     private String reg;
     private String name;
     private  String subjectname;
     private String subjectcode;
     private String mark;
     private String grade;
-    private String result;//=> constructor, get and set, default constructor
+    private String result;
 
-    public MarkEntity() {
-    }
-
-    public MarkEntity(String reg, String name, String subjectname, String subjectcode, String mark, String grade, String result) {
+    public MarkDto(String reg, String name, String subjectname, String subjectcode, String mark, String grade, String result) {
         this.reg = reg;
         this.name = name;
         this.subjectname = subjectname;
@@ -28,15 +18,9 @@ public class MarkEntity {
         this.grade = grade;
         this.result = result;
     }
+public MarkDto(){
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+}
     public String getReg() {
         return reg;
     }

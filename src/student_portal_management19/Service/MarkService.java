@@ -1,4 +1,4 @@
-package studentpackage.student_portal_management19.Service;
+package src.student_portal_management19.Service;
 
 import studentpackage.student_portal_management19.DTO.MarkDto;
 import studentpackage.student_portal_management19.Entity.MarkEntity;

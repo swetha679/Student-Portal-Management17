@@ -1,4 +1,4 @@
-package studentpackage.student_portal_management19.Controller;
+package src.student_portal_management19.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
